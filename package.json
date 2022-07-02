@@ -1,7 +1,7 @@
 {
   "name": "@himenon/template-esm-nodejs-server",
   "version": "1.0.0",
-  "description": "ESModule Library Template",
+  "description": "Template repository for nodejs server",
   "keywords": [
     "template",
     "typescript",
@@ -58,7 +58,8 @@
     "prettier:format": "prettier \"**/*.{js,jsx,ts,tsx,json,yml,yaml,md,html}\" --write ./src",
     "prettier:validate": "prettier --check \"**/*.{js,jsx,ts,tsx,json,yml,yaml,md,html}\"",
     "eslint:format": "eslint \"**/*.{ts,tsx}\" --fix",
-    "eslint:validate": "eslint \"**/*.{ts,tsx}\""
+    "eslint:validate": "eslint \"**/*.{ts,tsx}\"",
+    "watch": "nodemon"
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
