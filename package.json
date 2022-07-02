@@ -54,12 +54,11 @@
     "lerna:version:up": "lerna version --yes",
     "release:github:registry": "pnpm publish --registry https://npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}",
     "release:npm:registry": "pnpm publish",
-    "test": "run-p test:vitest eslint:validate prettier:validate",
+    "test": "run-p eslint:validate prettier:validate",
     "prettier:format": "prettier \"**/*.{js,jsx,ts,tsx,json,yml,yaml,md,html}\" --write ./src",
     "prettier:validate": "prettier --check \"**/*.{js,jsx,ts,tsx,json,yml,yaml,md,html}\"",
     "eslint:format": "eslint \"**/*.{ts,tsx}\" --fix",
-    "eslint:validate": "eslint \"**/*.{ts,tsx}\"",
-    "test:vitest": "vitest"
+    "eslint:validate": "eslint \"**/*.{ts,tsx}\""
   },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
@@ -119,7 +118,6 @@
     "@types/node": "18.0.0",
     "@typescript-eslint/eslint-plugin": "5.30.3",
     "@typescript-eslint/parser": "5.30.3",
-    "conventional-changelog-angular-all": "1.7.0",
     "cross-env": "^7.0.3",
     "eslint": "8.18.0",
     "eslint-config-prettier": "8.5.0",
@@ -136,9 +134,7 @@
     "swc-loader": "^0.2.3",
     "ts-node": "^10.8.1",
     "tslib": "^2.4.0",
-    "tsup": "^6.1.2",
     "typescript": "4.7.4",
-    "vitest": "^0.16.0",
     "webpack": "^5.73.0",
     "webpack-cli": "^4.10.0"
   },
