@@ -21,6 +21,8 @@ jobs:
           node-version: "16.x"
           cache: "pnpm"
       - run: pnpm i --frozen-lockfile
-      - name: Auto version update
+      - name: Semantic Release
         run: |
-          pnpm lerna:version:up
+          pnpm semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

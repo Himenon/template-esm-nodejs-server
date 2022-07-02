@@ -1,18 +1,20 @@
 {
-  "name": "@himenon/template-esm-js",
-  "version": "1.1.2",
+  "name": "@himenon/template-esm-nodejs-server",
+  "version": "1.0.0",
   "description": "ESModule Library Template",
   "keywords": [
     "template",
-    "typescript"
+    "typescript",
+    "nodejs",
+    "esmodule"
   ],
-  "homepage": "https://github.com/Himenon/template-esm-js#readme",
+  "homepage": "https://github.com/Himenon/template-esm-nodejs-server#readme",
   "bugs": {
-    "url": "https://github.com/Himenon/template-esm-js/issues"
+    "url": "https://github.com/Himenon/template-esm-nodejs-server/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:Himenon/template-esm-js.git"
+    "url": "git@github.com:Himenon/template-esm-nodejs-server.git"
   },
   "license": "MIT",
   "author": {
@@ -87,10 +89,31 @@
       "src/**/*"
     ]
   },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "Dockerfile"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
+  },
   "dependencies": {
     "express": "^4.18.1"
   },
   "devDependencies": {
+    "@semantic-release/commit-analyzer": "^9.0.2",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/release-notes-generator": "^10.0.3",
     "@swc/core": "^1.2.208",
     "@types/express": "^4.17.13",
     "@types/node": "18.0.0",
@@ -102,12 +125,12 @@
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "lerna": "5.1.6",
     "lint-staged": "13.0.3",
     "nodemon": "^2.0.18",
     "npm-run-all": "4.1.5",
     "prettier": "2.7.1",
     "regenerator-runtime": "^0.13.9",
+    "semantic-release": "^19.0.3",
     "simple-git-hooks": "^2.8.0",
     "sort-package-json": "1.57.0",
     "swc-loader": "^0.2.3",
@@ -121,5 +144,8 @@
   },
   "engines": {
     "pnpm": ">=7"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
