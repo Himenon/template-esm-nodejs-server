@@ -1,0 +1,101 @@
+{
+  "name": "@himenon/template-esm-js",
+  "version": "1.1.2",
+  "description": "ESModule Library Template",
+  "keywords": [
+    "template",
+    "typescript"
+  ],
+  "homepage": "https://github.com/Himenon/template-esm-js#readme",
+  "bugs": {
+    "url": "https://github.com/Himenon/template-esm-js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Himenon/template-esm-js.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Himenon",
+    "email": "k.himeno314@gmail.com",
+    "url": "https://github.com/Himenon"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs",
+      "node": "./dist/index.cjs",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "directories": {
+    "dist": "dist"
+  },
+  "files": [
+    "dist",
+    "package.json",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsup src/*.ts",
+    "clean": "pnpm ts ./scripts/clean.ts",
+    "format": "run-s prettier:format eslint:format",
+    "lerna:version:up": "lerna version --yes",
+    "release:github:registry": "pnpm publish --registry https://npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}",
+    "release:npm:registry": "pnpm publish",
+    "test": "run-p test:vitest eslint:validate prettier:validate",
+    "prettier:format": "prettier \"**/*.{js,jsx,ts,tsx,json,yml,yaml,md,html}\" --write ./src",
+    "prettier:validate": "prettier --check \"**/*.{js,jsx,ts,tsx,json,yml,yaml,md,html}\"",
+    "eslint:format": "eslint \"**/*.{ts,tsx}\" --fix",
+    "eslint:validate": "eslint \"**/*.{ts,tsx}\"",
+    "test:vitest": "vitest"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,json,yml,yaml,html,md}": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "package.json": [
+      "sort-package-json"
+    ]
+  },
+  "devDependencies": {
+    "@swc/core": "^1.2.204",
+    "@types/node": "18.0.0",
+    "@typescript-eslint/eslint-plugin": "5.29.0",
+    "@typescript-eslint/parser": "5.29.0",
+    "conventional-changelog-angular-all": "1.7.0",
+    "cross-env": "^7.0.3",
+    "eslint": "8.18.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-import": "2.26.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "lerna": "5.1.4",
+    "lint-staged": "13.0.2",
+    "npm-run-all": "4.1.5",
+    "prettier": "2.7.1",
+    "simple-git-hooks": "^2.8.0",
+    "sort-package-json": "1.57.0",
+    "tsup": "^6.1.2",
+    "typescript": "4.7.4",
+    "vitest": "^0.15.2"
+  },
+  "engines": {
+    "pnpm": ">=7"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
