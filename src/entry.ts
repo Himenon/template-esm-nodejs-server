@@ -10,6 +10,7 @@ const createApp = () => {
   const app = express();
 
   app.get("*", (req: express.Request, res: express.Response) => {
+    console.log(`req = ${req.url}`);
     res.json({ query: (req as any).query });
     res.end();
   });
