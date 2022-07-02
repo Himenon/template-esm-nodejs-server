@@ -24,46 +24,18 @@ jobs:
       - run: pnpm i --frozen-lockfile
       - run: |
           pnpm build
-
-  release-github-registry:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
         with:
-          ref: main
-      - uses: ./.github/actions/initialize
-      - uses: pnpm/action-setup@v2.2.2
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Set tag var
+        id: vars
+        run: echo ::set-output name=docker_tag::$(echo ${{ github.event.release.tag_name }} | sed -e 's/^v//')
+      - name: Docker Build & Push
+        uses: docker/build-push-action@v3
         with:
-          version: 7.1.0
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "16"
-          registry-url: https://npm.pkg.github.com
-          scope: "@Himenon"
-          cache: "pnpm"
-      - run: pnpm install
-      - run: |
-          pnpm build
-          pnpm run release:github:registry
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  release-npm-registry:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: main
-      - uses: pnpm/action-setup@v2.2.2
-        with:
-          version: 7.1.0
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "16.x"
-          registry-url: "https://registry.npmjs.org"
-          cache: "pnpm"
-      - run: pnpm install
-      - run: pnpm build
-      - run: pnpm run release:npm:registry
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          context: .
+          push: true
+          tags: ghcr.io/himenon/template-esm-nodejs-server:latest,ghcr.io/himenon/template-esm-nodejs-server:${{ steps.vars.outputs.docker_tag }}

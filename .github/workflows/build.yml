@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         node-version: [16]
-        os: [windows-latest, ubuntu-latest]
+        os: [ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -33,3 +33,13 @@ jobs:
           pnpm test
         env:
           CI: true
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Docker Build
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: false
+          tags: ghcr.io/himenon/texlive-ja-python:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
