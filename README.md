@@ -1,4 +1,4 @@
-# @himenon//template-esm-nodejs-server
+# @himenon/template-esm-nodejs-server
 
 ```bash
 docker run -e PORT=5000 -p 5000:5000 --rm ghcr.io/himenon/template-esm-nodejs-server
@@ -18,6 +18,13 @@ Build Step
 $ pnpm run build
 $ docker build --no-cache -t ghcr.io/himenon/template-esm-nodejs-server .
 ```
+
+## Release
+
+1. Merge `main` branch
+2. [GitHub Action] Auto update version by semantic release
+3. Create Release
+4. [GitHub Action] Push docker
 
 ## LICENCE
 
