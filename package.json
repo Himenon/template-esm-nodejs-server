@@ -43,8 +43,11 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsup src/*.ts",
+    "start": "node ./dist/server.mjs",
+    "build": "webpack",
+    "develop": "pnpm run ts:esm ./src/entry.ts",
     "clean": "pnpm ts ./scripts/clean.ts",
+    "ts:esm": "node --loader ts-node/esm --experimental-specifier-resolution=node",
     "format": "run-s prettier:format eslint:format",
     "lerna:version:up": "lerna version --yes",
     "release:github:registry": "pnpm publish --registry https://npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}",
@@ -71,31 +74,52 @@
       "sort-package-json"
     ]
   },
+  "nodemonConfig": {
+    "delay": 600,
+    "exec": "pnpm run build && pnpm run start",
+    "ext": "ts,tsx",
+    "ignore": [
+      "dist/*",
+      "test/*",
+      "docs/*"
+    ],
+    "watch": [
+      "src/**/*"
+    ]
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  },
   "devDependencies": {
-    "@swc/core": "^1.2.204",
+    "@swc/core": "^1.2.208",
+    "@types/express": "^4.17.13",
     "@types/node": "18.0.0",
-    "@typescript-eslint/eslint-plugin": "5.29.0",
-    "@typescript-eslint/parser": "5.29.0",
+    "@typescript-eslint/eslint-plugin": "5.30.3",
+    "@typescript-eslint/parser": "5.30.3",
     "conventional-changelog-angular-all": "1.7.0",
     "cross-env": "^7.0.3",
     "eslint": "8.18.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-import": "2.26.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "lerna": "5.1.4",
-    "lint-staged": "13.0.2",
+    "lerna": "5.1.6",
+    "lint-staged": "13.0.3",
+    "nodemon": "^2.0.18",
     "npm-run-all": "4.1.5",
     "prettier": "2.7.1",
+    "regenerator-runtime": "^0.13.9",
     "simple-git-hooks": "^2.8.0",
     "sort-package-json": "1.57.0",
+    "swc-loader": "^0.2.3",
+    "ts-node": "^10.8.1",
+    "tslib": "^2.4.0",
     "tsup": "^6.1.2",
     "typescript": "4.7.4",
-    "vitest": "^0.15.2"
+    "vitest": "^0.16.0",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0"
   },
   "engines": {
     "pnpm": ">=7"
-  },
-  "publishConfig": {
-    "access": "public"
   }
 }
