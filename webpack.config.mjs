@@ -1,9 +1,10 @@
 /* eslint-disable no-undef */
+import fs from "fs";
 import path from "path";
 import webpack from "webpack";
 
-
 const cwd = process.cwd();
+const pkg = JSON.parse(fs.readFileSync("./package.json", "utf-8"));
 
 process.on("unhandledRejection", console.dir);
 
@@ -30,7 +31,7 @@ const createConfig = () => {
     },
     plugins: [
       new webpack.DefinePlugin({
-        "process.env.APP_VERSION": JSON.stringify(process.env.APP_ENV || "dev"),
+        "process.env.APP_VERSION": JSON.stringify(pkg.version),
         "process.env.BUILD": JSON.stringify("webpack"),
       }),
     ],

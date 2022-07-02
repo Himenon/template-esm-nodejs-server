@@ -1,5 +1,4 @@
 import express from "express";
-import * as http from "http";
 
 const PORT = process.env.PORT || 3000;
 
@@ -7,7 +6,7 @@ process.on("unhandledRejection", error => {
   console.error(error);
 });
 
-const createServer = () => {
+const createApp = () => {
   const app = express();
 
   app.get("*", (req: express.Request, res: express.Response) => {
@@ -15,32 +14,43 @@ const createServer = () => {
     res.end();
   });
 
-  const init = async (): Promise<express.Application> => {
-    return new Promise(resolve => {
-      app.listen(PORT, () => {
-        console.log(`Serve start: http://localhost:${PORT}`);
-      });
-      resolve(app);
-    });
-  };
-
-  const start = async (): Promise<http.Server> => {
-    const app = await init();
-    const httpServer = http.createServer(app);
-    process.on("SIGTERM", () => {
-      httpServer.close();
-    });
-    return httpServer;
-  };
-
-  return {
-    start,
-  };
+  return app;
 };
 
-const server = createServer();
+const init = async () => {
+  const app = createApp();
 
-server.start().catch(error => {
+  let serverClosing = false;
+
+  const startClose = (reason: string) => {
+    if (serverClosing) {
+      return;
+    }
+    serverClosing = true;
+    console.log(`Start Close Serve by ${reason}r`);
+    httpServer.close(() => {
+      console.log(`Terminated by ${reason}`);
+    });
+  };
+
+  const httpServer = app.listen(PORT, () => {
+    console.log(`Serve[${process.env.APP_VERSION}] start: http://0.0.0.0:${PORT}`);
+  });
+
+  process.on("SIGTERM", () => {
+    startClose("SIGTERM");
+  });
+
+  process.on("SIGINT", () => {
+    startClose("SIGINT");
+  });
+
+  process.on("SIGHUP", () => {
+    startClose("SIGHUP");
+  });
+};
+
+init().catch(error => {
   console.error(error);
   process.exit(1);
 });

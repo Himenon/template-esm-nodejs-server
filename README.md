@@ -1,9 +1,24 @@
-# @himenon/template-esm-js
+# @himenon//template-esm-nodejs-server
 
-## Release
+```bash
+docker run -e PORT=5000 -p 5000:5000 --rm ghcr.io/himenon/template-esm-nodejs-server
+```
 
-- Automatic version updates are performed when merged into the `main` branch.
+## Development
+
+Watch
+
+```bash
+$ pnpm run watch
+```
+
+Build Step
+
+```bash
+$ pnpm run build
+$ docker build --no-cache -t ghcr.io/himenon/template-esm-nodejs-server .
+```
 
 ## LICENCE
 
-[@Himenon/template-esm-js](https://github.com/Himenon/template-esm-js)・MIT
+[@Himenon/template-esm-nodejs-server](https://github.com/Himenon/template-esm-nodejs-server)・MIT
