@@ -40,6 +40,6 @@ jobs:
         with:
           context: .
           push: false
-          tags: ghcr.io/himenon/texlive-ja-python:latest
+          tags: ghcr.io/himenon/template-esm-nodejs-server:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
